@@ -1,0 +1,9 @@
+c:\users\yorick\documents\visual studio 2015\Projects\Test\Test\bin\Debug\Test.exe.config
+c:\users\yorick\documents\visual studio 2015\Projects\Test\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
+c:\users\yorick\documents\visual studio 2015\Projects\Test\Test\obj\Debug\Test.Form1.resources
+c:\users\yorick\documents\visual studio 2015\Projects\Test\Test\obj\Debug\Test.Properties.Resources.resources
+c:\users\yorick\documents\visual studio 2015\Projects\Test\Test\obj\Debug\Test.csproj.GenerateResource.Cache
+c:\users\yorick\documents\visual studio 2015\Projects\Test\Test\bin\Debug\Test.exe
+c:\users\yorick\documents\visual studio 2015\Projects\Test\Test\bin\Debug\Test.pdb
+c:\users\yorick\documents\visual studio 2015\Projects\Test\Test\obj\Debug\Test.exe
+c:\users\yorick\documents\visual studio 2015\Projects\Test\Test\obj\Debug\Test.pdb
