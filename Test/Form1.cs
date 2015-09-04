@@ -71,31 +71,11 @@ namespace Test
             string indata = sp.ReadExisting();
             string[] search = new string[] { "ACK", "ERROR", "RUN" };
 
-            bool toUI = true;
             foreach (string s in search)
-            {
-                if (!s.Contains(indata))
-                {
-                    toUI = false;
-                    break;
-                }
-                else
-                {
-                    toUI = true; 
-                    
-                }
-;
-                
-               
+            { 
+                indata = indata.Replace(s, "");
             }
-            if (!toUI)
-            {
-                UpdateStatus(indata);
-            }
-            else
-            {
-                this.BeginInvoke(new SetTextDeleg(DisplayToUI), new object[] { indata });
-            }
+            UpdateStatus(indata);
 
         }
 
