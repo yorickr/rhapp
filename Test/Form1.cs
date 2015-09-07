@@ -22,14 +22,24 @@ namespace Test
         public Form1()
         {
             InitializeComponent();
-            SettingRS232();
+            ListPorts();
         }
 
-        public void SettingRS232()
+        public void ListPorts()
+        {
+            string[] ports = SerialPort.GetPortNames();
+            Array.Sort(ports);
+            foreach(string s in ports)
+            {
+                comboBox1.Items.Add(s);
+            }
+        }
+
+        public void setPort(string portName)
         {
             try
             {
-                port = new SerialPort("COM1");
+                port = new SerialPort(portName);
 
                 port.BaudRate = 9600;
                 port.Parity = Parity.None;
@@ -68,14 +78,27 @@ namespace Test
         {
             SerialPort sp = (SerialPort)sender;
             Thread.Sleep(500);
-            string indata = sp.ReadExisting();
-            string[] search = new string[] { "ACK", "ERROR", "RUN" };
+            if (port.IsOpen)
+            {
+                string indata = sp.ReadExisting();
+                string[] search = new string[] { "ACK", "ERROR", "RUN" };
 
-            foreach (string s in search)
-            { 
-                indata = indata.Replace(s, "");
+                foreach (string s in search)
+                {
+                    indata = indata.Replace(s, "");
+                }
+
+                string[] data = indata.Split('\n');
+                if (data.Length > 2)
+                    UpdateStatus(data[1]);
+                else
+                    UpdateStatus(data[0]);
             }
-            UpdateStatus(indata);
+            else
+            {
+                return;
+            }
+            
 
         }
 
@@ -103,7 +126,10 @@ namespace Test
 
         private void sendMessage(string s)
         {
-            port.WriteLine(s);
+            if (port != null && port.IsOpen)
+            {
+                port.WriteLine(s);
+            }
         }
 
         private void sendMultipleMessages(string[] s)
@@ -152,5 +178,15 @@ namespace Test
             sendMultipleMessages(new string[] { "CM", "PE  " + textBox4.Text });
         }
 
+        private void button7_Click(object sender, EventArgs e)
+        {
+            setPort(comboBox1.Text);         
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            port.Close();
+            port = null;
+        }
     }
 }
