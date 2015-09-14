@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace Test
@@ -18,11 +19,25 @@ namespace Test
         private delegate void SetTextDeleg(string data);
         private delegate void SetTextCallback(string text);
         private SerialPort port;
+        string storagePath = Environment.CurrentDirectory.ToString() + "\\file.txt";
+        private FileStream fifo;
+        private StreamWriter strw;
+        private StreamReader strr;
+        private List<string> toWrite = new List<string>(); 
 
         public Form1()
         {
             InitializeComponent();
+            InitializeFileStreams();
             ListPorts();
+        }
+
+        public void InitializeFileStreams()
+        {
+            fifo = File.Open(storagePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            strw = new StreamWriter(fifo);
+            strr = new StreamReader(fifo);
+
         }
 
         public void ListPorts()
@@ -94,25 +109,20 @@ namespace Test
                 else
                     UpdateStatus(data[0]);
             }
-            else
-            {
-                return;
-            }
             
-
         }
 
-        public void UpdateStatus(string indata)
+        public void UpdateStatus(string data)
         {
-
+            toWrite.Add(data.Replace("\n",""));
             if (label5.InvokeRequired)
             {
                 SetTextCallback d = new SetTextCallback(UpdateStatus);
-                Invoke(d, new object[] { indata });
+                Invoke(d, new object[] { data });
             }
             else
             {
-                label5.Text = indata.Replace("\t", "    ");
+                label5.Text = data.Replace("\t", "    ");
             }
             
         }
@@ -178,14 +188,32 @@ namespace Test
             sendMultipleMessages(new string[] { "CM", "PE  " + textBox4.Text });
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void ConnectButton(object sender, EventArgs e)
         {
-            setPort(comboBox1.Text);         
+            setPort(comboBox1.Text);
+            if (File.Exists(storagePath))
+            {
+                string current;
+                while ((current = strr.ReadLine()) != null)
+                {
+                    Invoke(new SetTextDeleg(DisplayToUI), new object[] { current + Environment.NewLine });
+                }
+                    
+            }
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void DisconnectButton(object sender, EventArgs e)
         {
-            port.Close();
+            toWrite.ForEach(str =>
+            {
+                strw.WriteLine(str);
+            });
+            strw.Flush();
+            toWrite.Clear();
+            if (port != null)
+            {
+                port.Close();
+            }
             port = null;
         }
     }

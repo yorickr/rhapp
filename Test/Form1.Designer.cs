@@ -73,6 +73,7 @@
             this.richTextBox1.Size = new System.Drawing.Size(512, 104);
             this.richTextBox1.TabIndex = 2;
             this.richTextBox1.Text = "";
+            this.richTextBox1.Multiline = true;
             // 
             // button2
             // 
@@ -205,7 +206,7 @@
             this.button7.TabIndex = 17;
             this.button7.Text = "Connect";
             this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.button7.Click += new System.EventHandler(this.ConnectButton);
             // 
             // button8
             // 
@@ -215,7 +216,7 @@
             this.button8.TabIndex = 18;
             this.button8.Text = "Disconnect";
             this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.button8.Click += new System.EventHandler(this.DisconnectButton);
             // 
             // Form1
             // 
