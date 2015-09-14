@@ -7,3 +7,12 @@ c:\users\yorick\documents\visual studio 2015\Projects\Test\Test\bin\Debug\Test.e
 c:\users\yorick\documents\visual studio 2015\Projects\Test\Test\bin\Debug\Test.pdb
 c:\users\yorick\documents\visual studio 2015\Projects\Test\Test\obj\Debug\Test.exe
 c:\users\yorick\documents\visual studio 2015\Projects\Test\Test\obj\Debug\Test.pdb
+C:\Users\Arthur\Documents\TI2\Test\bin\Debug\Test.exe.config
+C:\Users\Arthur\Documents\TI2\Test\obj\Debug\Test.exe
+C:\Users\Arthur\Documents\TI2\Test\obj\Debug\Test.pdb
+C:\Users\Arthur\Documents\TI2\Test\bin\Debug\Test.exe
+C:\Users\Arthur\Documents\TI2\Test\bin\Debug\Test.pdb
+C:\Users\Arthur\Documents\TI2\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
+C:\Users\Arthur\Documents\TI2\Test\obj\Debug\Test.Form1.resources
+C:\Users\Arthur\Documents\TI2\Test\obj\Debug\Test.Properties.Resources.resources
+C:\Users\Arthur\Documents\TI2\Test\obj\Debug\Test.csproj.GenerateResource.Cache

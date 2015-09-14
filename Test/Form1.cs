@@ -191,6 +191,31 @@ namespace Test
         private void ConnectButton(object sender, EventArgs e)
         {
             setPort(comboBox1.Text);
+           
+        }
+
+        private void DisconnectButton(object sender, EventArgs e)
+        {
+            if (port != null)
+            {
+                port.Close();
+            }
+            port = null;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+
+            toWrite.ForEach(str =>
+            {
+                strw.WriteLine(str);
+            });
+            strw.Flush();
+            toWrite.Clear();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
             if (File.Exists(storagePath))
             {
                 string current;
@@ -198,23 +223,8 @@ namespace Test
                 {
                     Invoke(new SetTextDeleg(DisplayToUI), new object[] { current + Environment.NewLine });
                 }
-                    
-            }
-        }
 
-        private void DisconnectButton(object sender, EventArgs e)
-        {
-            toWrite.ForEach(str =>
-            {
-                strw.WriteLine(str);
-            });
-            strw.Flush();
-            toWrite.Clear();
-            if (port != null)
-            {
-                port.Close();
             }
-            port = null;
         }
     }
 }
