@@ -34,7 +34,10 @@ namespace Test
 
         public void InitializeFileStreams()
         {
-            fifo = File.Open(storagePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+
+           
+            fifo = File.Open(storagePath, FileMode.Create, FileAccess.ReadWrite);
+           
             strw = new StreamWriter(fifo);
             strr = new StreamReader(fifo);
 
@@ -206,6 +209,8 @@ namespace Test
         private void button9_Click(object sender, EventArgs e)
         {
 
+            
+            
             toWrite.ForEach(str =>
             {
                 strw.WriteLine(str);
@@ -223,6 +228,9 @@ namespace Test
                 {
                     Invoke(new SetTextDeleg(DisplayToUI), new object[] { current + Environment.NewLine });
                 }
+
+                Console.WriteLine("Done");
+                Console.Read() ;
 
             }
         }
