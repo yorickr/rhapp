@@ -19,10 +19,7 @@ namespace Test
         private delegate void SetTextDeleg(string data);
         private delegate void SetTextCallback(string text);
         private SerialPort port;
-        string storagePath = Environment.CurrentDirectory.ToString() + "\\file.txt";
-        private FileStream fifo;
-        private StreamWriter strw;
-        private StreamReader strr;
+        
         private List<string> toWrite = new List<string>(); 
 
         public Form1()
@@ -36,10 +33,6 @@ namespace Test
         {
 
            
-            fifo = File.Open(storagePath, FileMode.Create, FileAccess.ReadWrite);
-           
-            strw = new StreamWriter(fifo);
-            strr = new StreamReader(fifo);
 
         }
 
@@ -208,31 +201,63 @@ namespace Test
 
         private void button9_Click(object sender, EventArgs e)
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = System.Environment.CurrentDirectory;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string source = saveFileDialog.FileName;
+                FileStream fifo = File.Open(source, FileMode.Create, FileAccess.ReadWrite);
+                using (StreamWriter w = new StreamWriter(fifo))
+                {
+                    toWrite.ForEach(str =>
+                    {
+                        w.WriteLine(str);
+                    });
+
+                    toWrite.Clear();
+                }
+
+            }
+
+
 
             
-            
-            toWrite.ForEach(str =>
-            {
-                strw.WriteLine(str);
-            });
-            strw.Flush();
-            toWrite.Clear();
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-            if (File.Exists(storagePath))
+
+            OpenFileDialog browseFileDialog = new OpenFileDialog();
+            browseFileDialog.InitialDirectory = System.Environment.CurrentDirectory;
+
+
+            if (browseFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string current;
-                while ((current = strr.ReadLine()) != null)
+                if (browseFileDialog.CheckFileExists)
                 {
-                    Invoke(new SetTextDeleg(DisplayToUI), new object[] { current + Environment.NewLine });
+
+
+
+                    string source = browseFileDialog.FileName;
+                    using (StreamReader r = File.OpenText(source))
+                    {
+                        string current;
+                        while ((current = r.ReadLine()) != null)
+                        {
+                            Invoke(new SetTextDeleg(DisplayToUI), new object[] { current + Environment.NewLine });
+                        }
+                    }
+
+
                 }
-
-                Console.WriteLine("Done");
-                Console.Read() ;
-
             }
+
+            browseFileDialog.Dispose();
+
+
+
+           
         }
     }
 }
