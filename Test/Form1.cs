@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace Test
@@ -18,11 +19,21 @@ namespace Test
         private delegate void SetTextDeleg(string data);
         private delegate void SetTextCallback(string text);
         private SerialPort port;
+        
+        private List<string> toWrite = new List<string>(); 
 
         public Form1()
         {
             InitializeComponent();
+            InitializeFileStreams();
             ListPorts();
+        }
+
+        public void InitializeFileStreams()
+        {
+
+           
+
         }
 
         public void ListPorts()
@@ -94,25 +105,20 @@ namespace Test
                 else
                     UpdateStatus(data[0]);
             }
-            else
-            {
-                return;
-            }
             
-
         }
 
-        public void UpdateStatus(string indata)
+        public void UpdateStatus(string data)
         {
-
+            toWrite.Add(data.Replace("\n",""));
             if (label5.InvokeRequired)
             {
                 SetTextCallback d = new SetTextCallback(UpdateStatus);
-                Invoke(d, new object[] { indata });
+                Invoke(d, new object[] { data });
             }
             else
             {
-                label5.Text = indata.Replace("\t", "    ");
+                label5.Text = data.Replace("\t", "    ");
             }
             
         }
@@ -178,15 +184,80 @@ namespace Test
             sendMultipleMessages(new string[] { "CM", "PE  " + textBox4.Text });
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void ConnectButton(object sender, EventArgs e)
         {
-            setPort(comboBox1.Text);         
+            setPort(comboBox1.Text);
+           
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void DisconnectButton(object sender, EventArgs e)
         {
-            port.Close();
+            if (port != null)
+            {
+                port.Close();
+            }
             port = null;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = System.Environment.CurrentDirectory;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string source = saveFileDialog.FileName;
+                FileStream fifo = File.Open(source, FileMode.Create, FileAccess.ReadWrite);
+                using (StreamWriter w = new StreamWriter(fifo))
+                {
+                    toWrite.ForEach(str =>
+                    {
+                        w.WriteLine(str);
+                    });
+
+                    toWrite.Clear();
+                }
+
+            }
+
+
+
+            
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+
+            OpenFileDialog browseFileDialog = new OpenFileDialog();
+            browseFileDialog.InitialDirectory = System.Environment.CurrentDirectory;
+
+
+            if (browseFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (browseFileDialog.CheckFileExists)
+                {
+
+
+
+                    string source = browseFileDialog.FileName;
+                    using (StreamReader r = File.OpenText(source))
+                    {
+                        string current;
+                        while ((current = r.ReadLine()) != null)
+                        {
+                            Invoke(new SetTextDeleg(DisplayToUI), new object[] { current + Environment.NewLine });
+                        }
+                    }
+
+
+                }
+            }
+
+            browseFileDialog.Dispose();
+
+
+
+           
         }
     }
 }
