@@ -218,7 +218,7 @@ namespace Client_ArtsApp
             if(check)
             {
                 connection = new TcpClient(host.ToString(), 1338);
-                WriteTextMessage(connection, "00-GENERICNAME");
+                WriteTextMessage(connection, "00-" + username.Text);
             }
 
 
