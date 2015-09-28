@@ -28,18 +28,17 @@ namespace ArtsApp
 
         public String returnUsername()
         {
-            return username.ToString();
+            return username.Text;
         }
 
         public String returnPassWord()
         {
-            return password.ToString();
+            return password.Text;
         }
 
         private void Login_Click(object sender, EventArgs e)
         {
             done = true;
-
             this.Close();
         }
     }

@@ -78,7 +78,7 @@ namespace ClientApp
                         sendMessage("ST");
                         if(connection!=null)
                         {
-                            WriteTextMessage(connection, "01-" + currentRead);
+                            WriteTextMessage(connection, "01" + currentRead);
                         }
                         Thread.Sleep(1000);
                     }
@@ -218,10 +218,16 @@ namespace ClientApp
             if(check)
             {
                 connection = new TcpClient(host.ToString(), 1338);
-                WriteTextMessage(connection, "00-" + username.Text);
+                WriteTextMessage(connection, "00" + username.Text);
             }
+        }
 
-
+        private void Client()
+        {
+            while (true)
+            {
+                ReadTextMessage(connection);
+            }
         }
 
         private void ConnectBike_Click(object sender, EventArgs e)
