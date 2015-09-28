@@ -58,6 +58,7 @@
             this.chatBox = new System.Windows.Forms.RichTextBox();
             this.MessageBox = new System.Windows.Forms.TextBox();
             this.sendmsg = new System.Windows.Forms.Button();
+            this.username = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -232,7 +233,7 @@
             // 
             // ConnectServer
             // 
-            this.ConnectServer.Location = new System.Drawing.Point(425, 119);
+            this.ConnectServer.Location = new System.Drawing.Point(482, 118);
             this.ConnectServer.Name = "ConnectServer";
             this.ConnectServer.Size = new System.Drawing.Size(75, 23);
             this.ConnectServer.TabIndex = 24;
@@ -287,7 +288,7 @@
             // 
             // Disconnect
             // 
-            this.Disconnect.Location = new System.Drawing.Point(506, 119);
+            this.Disconnect.Location = new System.Drawing.Point(563, 118);
             this.Disconnect.Name = "Disconnect";
             this.Disconnect.Size = new System.Drawing.Size(75, 23);
             this.Disconnect.TabIndex = 30;
@@ -320,11 +321,19 @@
             this.sendmsg.UseVisualStyleBackColor = true;
             this.sendmsg.Click += new System.EventHandler(this.sendmsg_Click);
             // 
+            // username
+            // 
+            this.username.Location = new System.Drawing.Point(392, 120);
+            this.username.Name = "username";
+            this.username.Size = new System.Drawing.Size(84, 20);
+            this.username.TabIndex = 34;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(681, 315);
+            this.Controls.Add(this.username);
             this.Controls.Add(this.sendmsg);
             this.Controls.Add(this.MessageBox);
             this.Controls.Add(this.chatBox);
@@ -394,6 +403,7 @@
         private System.Windows.Forms.RichTextBox chatBox;
         private System.Windows.Forms.TextBox MessageBox;
         private System.Windows.Forms.Button sendmsg;
+        private System.Windows.Forms.TextBox username;
     }
 }
 
