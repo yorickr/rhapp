@@ -440,25 +440,19 @@ namespace ArtsApp
             }
         }
 
+        public void setLoginInfo(string usr, string pw)
+        {
+            USERNAME = usr;
+            PASSWORD = pw;
+
+        }
+
         private void showLoginDialog()
         {
-            LoginWindow test = new LoginWindow();
+            LoginWindow test = new LoginWindow(this);
 
             test.ShowDialog();
-
-            while (test.done != true)
-            {
-
-                if (test.done == true)
-                {
-                    USERNAME = test.returnUsername();
-                    PASSWORD = test.returnPassWord();
-
-                }
-
-
-            }
-
+            
             IPAddress host;
             bool check = IPAddress.TryParse(textBox7.Text, out host);
 
@@ -470,7 +464,7 @@ namespace ArtsApp
                     Thread con = new Thread(new ThreadStart(Connection));
                     con.Start();
                 }
-                WriteTextMessage(connection, "07" + "Test" + ":" + "pass");
+                WriteTextMessage(connection, "07" + USERNAME + ":" + PASSWORD);
             }
         }
     }

@@ -16,3 +16,6 @@ C:\Users\Arthur\Documents\TI2\Test\obj\Debug\Test.csprojResolveAssemblyReference
 C:\Users\Arthur\Documents\TI2\Test\obj\Debug\Test.Form1.resources
 C:\Users\Arthur\Documents\TI2\Test\obj\Debug\Test.Properties.Resources.resources
 C:\Users\Arthur\Documents\TI2\Test\obj\Debug\Test.csproj.GenerateResource.Cache
+C:\Users\guusv_000\Documents\rhapp\Test\bin\Debug\Test.exe.config
+C:\Users\guusv_000\Documents\rhapp\Test\obj\Debug\Test.exe
+C:\Users\guusv_000\Documents\rhapp\Test\obj\Debug\Test.pdb

@@ -36,7 +36,7 @@ namespace ServerApplicatie
         private void StartServer(object sender, EventArgs e)
         {
             if (server == null) {
-                IPAddress ip = IPAddress.Parse(GetGateway());
+                IPAddress ip = IPAddress.Parse(GetPublicIp());
                 server = new TcpListener(IPAddress.Any, 1338);
                 DisplayOnScreen("Server is running...");
                 UpdateIP(ip.ToString());
@@ -46,17 +46,22 @@ namespace ServerApplicatie
             }
         }
 
+
+        //Stopt de Server en slaat alle data op.
         private void StopServer(object sender, EventArgs e)
         {
             foreach (Client c in clients)
             {
-                c.SafeData();
+                c.StopConnection();
             }
             server.Stop();
             DisplayOnScreen("Server stopped!");
             server = null;
         }
 
+
+
+        //Maakt een folder aan, op het moment dat hij nog niet bestaat.
         private void CreateFolder()
         {
             string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "clientdata");
@@ -68,6 +73,9 @@ namespace ServerApplicatie
             }
         }
 
+
+        //Thread waarin de server loopt.
+        //Voegt clients toe aan de list.
         private void ServerRunning()
         {
             DisplayOnScreen("Accepting clients!");
@@ -86,6 +94,7 @@ namespace ServerApplicatie
 
         private delegate void SetTextCallback(string msg);
 
+        //Verandert het IP adres op het scherm.
         public void UpdateIP(String text) {
             if (label3.InvokeRequired)
             {
@@ -96,20 +105,32 @@ namespace ServerApplicatie
         }
 
 
-        private String GetGateway()
+        //Geeft het public ip adres.
+        private String GetPublicIp()
         {
-            string url = "http://checkip.dyndns.org";
-            System.Net.WebRequest req = System.Net.WebRequest.Create(url);
-            System.Net.WebResponse resp = req.GetResponse();
-            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
-            string response = sr.ReadToEnd().Trim();
-            string[] AllData = response.Split(':');
-            string dataString = AllData[1].Substring(1);
-            string[] data = dataString.Split('<');
-            string ip = data[0];
+            string ip = "";
+            try
+            {
+                string url = "http://checkip.dyndns.org";
+                System.Net.WebRequest req = System.Net.WebRequest.Create(url);
+                System.Net.WebResponse resp = req.GetResponse();
+                System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+                string response = sr.ReadToEnd().Trim();
+                string[] AllData = response.Split(':');
+                string dataString = AllData[1].Substring(1);
+                string[] data = dataString.Split('<');
+                ip = data[0];
+            }
+            catch (Exception e) {
+                ip = "0.0.0.0";
+            }
             return ip;
         }
 
+
+
+        //Voegt een bericht toe aan de textbox op het scherm.
+        //Scrollt daarna naar onder.
         public void DisplayOnScreen(string displayData)
         {
             if (richTextBox1.InvokeRequired)
@@ -117,11 +138,13 @@ namespace ServerApplicatie
                 Invoke(new SetTextCallback(DisplayOnScreen), new object[] { displayData });
             }
             else {
-                richTextBox1.AppendText( "\n" + displayData);
+                richTextBox1.AppendText(displayData + "\n");
                 richTextBox1.ScrollToCaret();
             }
         }
 
+
+        //Stuurt alle clientnamen naar de dokter.
         public void SendClientsToDoctors()
         {
             foreach (Client client in clients)
@@ -139,6 +162,8 @@ namespace ServerApplicatie
             }
         }
 
+
+        //Verwijdert een client.
         public void RemoveClient(Client client)
         {
             if (clients.Contains(client))
@@ -164,6 +189,7 @@ namespace ServerApplicatie
         private List<String> data;
         private Form1 application;
         private Thread thread;
+        private bool isDoctor = false;
         private bool isAlive = true;
         private List<Client> races;
 
@@ -179,22 +205,20 @@ namespace ServerApplicatie
             races = new List<Client>();
         }
 
-        public Boolean IsDoctor()
+
+        //Geeft terug of de client een dokter is.
+        public bool IsDoctor()
         {
-            if (clientname.Equals("DOCTOR"))
-            {
-                return true;
-            } else
-            {
-                return false;
-            }
+            return isDoctor;
         }
 
+        //Een race wordt toegevoegd in de List van races.
         public void AddRace(Client c)
         {
             races.Add(c);
         }
 
+        //De Thread die ervoor zorgt dat op het moment dat er een Message binnenkomt, dat deze wordt afgehandeld.
         private void HandleClient()
         {
             while (true)
@@ -203,34 +227,51 @@ namespace ServerApplicatie
                     HandleData(reader.ReadLine());
                 } catch (Exception e)
                 {
-                    if (isAlive) { 
-                        application.DisplayOnScreen("Error on client " + clientname + "! Closing client!");
-                        StopConnection();
-                    }
+                  if (isAlive) { 
+                      application.DisplayOnScreen("Error on client " + clientname + "! Closing client!");
+                      StopConnection();
+                  }
                 }
             }
         }
 
+
+        //Voegt de binnengekomen data toe aan de List. 
+        //Indien de client een race heeft met een andere client, dan wordt de data ook naar die client toegestuurd.
+        //De data wordt ook meteen doorgestuurd naar de dokter.
         private void AddData(String data)
         {
             this.data.Add(data);
             foreach(Client client in races)
             {
-                client.WriteMessage("06" + data);
+                client.WriteMessage("06" + clientname + ":" + data);
+            }
+            foreach(Client client in application.GetClients())
+            {
+                if (client.IsDoctor())
+                {
+                    client.WriteMessage("01" + clientname + ":" + data);
+                }
             }
         }
 
+
+        //Stuurt een bericht naar de client/
         public void WriteMessage(String message)
         {
             writer.WriteLine(message);
             writer.Flush();
         }
 
+
+        //Geeft de clientnaam terug.
         public String getClientname()
         {
             return clientname;
         }
 
+
+        //Handelt de binnenkomende data af.
         private void HandleData(String data)
         {
             application.DisplayOnScreen(data);
@@ -242,10 +283,47 @@ namespace ServerApplicatie
                 case "03": StopConnection();  break;
                 case "04": Chat(data.Substring(2)); break;
                 case "06": Race(data.Substring(2)); break;
+                case "07": DoctorConnecting(data.Substring(2)); break;
+                case "08": SendCommando(data.Substring(2)); break;
                 default: application.DisplayOnScreen("Incorrect message send!"); break;
             }
         }
 
+
+        private void SendCommando(string data)
+        {
+            string[] splitData = data.Split(':');
+            foreach(Client client in application.GetClients())
+            {
+                if (client.clientname == splitData[0])
+                {
+                    client.WriteMessage("08" + splitData[1]);
+                }
+            }
+        }
+
+
+        //Verifieert of de gebruiker daadwerkelijk de dokter is.
+        //Stuurt daarna een authenticatie bericht.
+        private void DoctorConnecting(String data)
+        {
+            string[] splitData = data.Split(':');
+            clientname = splitData[0];
+            //if (splitData[1] == "password")
+            //{
+                WriteMessage("07Authentication Succesfull!");
+                isDoctor = true;
+            //} else{
+              //  WriteMessage("07Authentication Failed!");
+            //}
+            application.SendClientsToDoctors();
+        }
+
+
+
+
+        //Op het moment dat de dokter, 2 clients tegen elkaar wil laten racen.
+        //Voegt dan bij allebei de clients toe dat ze met elkaar racen.
         private void Race(String data)
         {
             String[] clientnames = data.Split(':');
@@ -266,6 +344,9 @@ namespace ServerApplicatie
             client2.AddRace(client1);
         }
 
+        //Controleert of het bericht door een dokter wordt verstuurd.
+        //Indien het door een dokter verstuurd wordt, dan controleert hij naar welke persoon het verstuurd moet worden.
+        //Anders stuurt hij het naar de dokter.
         private void Chat(String data)
         {
             if (IsDoctor())
@@ -278,8 +359,7 @@ namespace ServerApplicatie
                         c.WriteMessage("04" + splitData[1]);
                     }
                 }
-            } else
-            {
+            } else {
                 foreach(Client client in application.GetClients())
                 {
                     if (client.IsDoctor())
@@ -290,6 +370,8 @@ namespace ServerApplicatie
             }
         }
 
+
+        //Streamt data van de client door naar de dokter, indien hier om gevraagd wordt.
         private void StreamData(String data)
         {
             string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), data + ".dat");
@@ -303,12 +385,18 @@ namespace ServerApplicatie
             }
         }
 
+
+        //Geeft de client een naam.
+        //Stuurt vervolgens naar de dokter dat er een nieuwe client verbonden is.
         private void NameClient(String data)
         {
             clientname = data.Substring(2);
             application.SendClientsToDoctors();
         }
 
+
+        //Slaat de data van de client op.
+        //Indien de patient niet eerder de test heeft uitgevoerd, dan zal er een nieuw bestand worden aangemaakt.
         public void SafeData()
         {
             if (clientname != "")
@@ -324,6 +412,7 @@ namespace ServerApplicatie
                             tw.WriteLine(line.ToString());
                         }
                         tw.WriteLine("----------------------------------------");
+                        tw.WriteLine(DateTime.Now.ToString("HH:mm:ss dd-MM-yyyy"));
                         foreach (String line in data)
                         {
                             tw.WriteLine(line.ToString());
@@ -334,6 +423,7 @@ namespace ServerApplicatie
                     {
                         File.Create(path).Close();
                         StreamWriter tw = new StreamWriter(path);
+                        tw.WriteLine(DateTime.Now.ToString("HH:mm:ss dd-MM-yyyy"));
                         foreach (String line in data)
                         {
                             tw.WriteLine(line.ToString());
@@ -347,7 +437,10 @@ namespace ServerApplicatie
             }
         }
 
-        private void StopConnection()
+        //Sluit de connectie met een client af.
+        //Hij slaat de data van de client eerst op.
+        //Dan sluit hij de thread af.
+        public void StopConnection()
         {
             SafeData();
             application.DisplayOnScreen("Connection closed with " + clientname);

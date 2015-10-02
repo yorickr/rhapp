@@ -7,3 +7,11 @@ C:\Users\Arthur\Documents\TI2\ClientApp\obj\Debug\ClientApp.csprojResolveAssembl
 C:\Users\Arthur\Documents\TI2\ClientApp\obj\Debug\ClientApp.Form1.resources
 C:\Users\Arthur\Documents\TI2\ClientApp\obj\Debug\Client_ArtsApp.Properties.Resources.resources
 C:\Users\Arthur\Documents\TI2\ClientApp\obj\Debug\ClientApp.csproj.GenerateResource.Cache
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ClientApp\bin\Debug\Client-ArtsApp.exe.config
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ClientApp\bin\Debug\Client-ArtsApp.exe
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ClientApp\bin\Debug\Client-ArtsApp.pdb
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ClientApp\obj\Debug\ClientApp.Form1.resources
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ClientApp\obj\Debug\Client_ArtsApp.Properties.Resources.resources
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ClientApp\obj\Debug\ClientApp.csproj.GenerateResource.Cache
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ClientApp\obj\Debug\Client-ArtsApp.exe
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ClientApp\obj\Debug\Client-ArtsApp.pdb
