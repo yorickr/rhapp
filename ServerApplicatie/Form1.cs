@@ -108,15 +108,22 @@ namespace ServerApplicatie
         //Geeft het public ip adres.
         private String GetPublicIp()
         {
-            string url = "http://checkip.dyndns.org";
-            System.Net.WebRequest req = System.Net.WebRequest.Create(url);
-            System.Net.WebResponse resp = req.GetResponse();
-            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
-            string response = sr.ReadToEnd().Trim();
-            string[] AllData = response.Split(':');
-            string dataString = AllData[1].Substring(1);
-            string[] data = dataString.Split('<');
-            string ip = data[0];
+            string ip = "";
+            try
+            {
+                string url = "http://checkip.dyndns.org";
+                System.Net.WebRequest req = System.Net.WebRequest.Create(url);
+                System.Net.WebResponse resp = req.GetResponse();
+                System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+                string response = sr.ReadToEnd().Trim();
+                string[] AllData = response.Split(':');
+                string dataString = AllData[1].Substring(1);
+                string[] data = dataString.Split('<');
+                ip = data[0];
+            }
+            catch (Exception e) {
+                ip = "0.0.0.0";
+            }
             return ip;
         }
 
