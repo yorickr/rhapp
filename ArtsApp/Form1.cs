@@ -9,10 +9,12 @@ using System.IO.Ports;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace ArtsApp
 {
@@ -39,6 +41,7 @@ namespace ArtsApp
             listCommands();
             patients = new List<Patient>();
             selected = "";
+            Test();
         }
 
         public void ListPorts()
@@ -447,6 +450,100 @@ namespace ArtsApp
 
         }
 
+        public void makeKeyPair()
+        {
+            var csp = new RSACryptoServiceProvider(2048);
+            var privKey = csp.ExportParameters(true);
+            var pubKey = csp.ExportParameters(false);
+
+            string pubKeyString;
+            {
+                var sw = new System.IO.StringWriter();
+                var xs = new System.Xml.Serialization.XmlSerializer(typeof(RSAParameters));
+                xs.Serialize(sw, pubKey);
+                pubKeyString = sw.ToString();
+            }
+
+            string privKeyString;
+            {
+                var sw = new System.IO.StringWriter();
+                var xs = new System.Xml.Serialization.XmlSerializer(typeof(RSAParameters));
+                xs.Serialize(sw, privKey);
+                privKeyString = sw.ToString();
+            }
+
+            using (StreamWriter sw = new StreamWriter("pub.key"))
+            {
+                sw.WriteLine(pubKeyString);
+                sw.Flush();
+            }
+
+            using (StreamWriter sw = new StreamWriter("priv.key"))
+            {
+                sw.WriteLine(privKeyString);
+                sw.Flush();
+            }
+        }
+
+        public string Encrypt(string toEncrypt)
+        {
+            string retval;
+
+            var csp = new RSACryptoServiceProvider();
+
+            RSAParameters pubKey;
+            using (StreamReader sr = new StreamReader("pub.key"))
+            {
+                string readdata = sr.ReadLine();
+                var stringReader = new System.IO.StringReader(readdata);
+                var xs = new System.Xml.Serialization.XmlSerializer(typeof(RSAParameters));
+                pubKey = (RSAParameters)xs.Deserialize(sr);
+            }
+            csp.ImportParameters(pubKey);
+
+            var bytesPlainTextData = Encoding.Unicode.GetBytes(toEncrypt);
+
+            var bytesCypherText = csp.Encrypt(bytesPlainTextData, false);
+
+            var cypherText = Convert.ToBase64String(bytesCypherText);
+            
+
+            return cypherText;
+        }
+
+        public string Decrypt(string toDecrypt)
+        {
+            var csp = new RSACryptoServiceProvider();
+
+            RSAParameters privKey;
+            using (StreamReader sr = new StreamReader("priv.key"))
+            {
+                string readdata = sr.ReadLine();
+                var stringReader = new System.IO.StringReader(readdata);
+                var xs = new System.Xml.Serialization.XmlSerializer(typeof(RSAParameters));
+                privKey = (RSAParameters)xs.Deserialize(sr);
+            }
+
+            var bytesCypherText = Convert.FromBase64String(toDecrypt);
+
+            csp = new RSACryptoServiceProvider();
+            csp.ImportParameters(privKey);
+
+            var bytesPlainTextData = csp.Decrypt(bytesCypherText, false);
+
+            return System.Text.Encoding.Unicode.GetString(bytesPlainTextData);
+        }
+
+        public void Test()
+        {
+            Console.WriteLine("Testing  ");
+            makeKeyPair();
+            string encrypted = Encrypt("hallo");
+
+            Console.WriteLine(encrypted);
+            Console.WriteLine(Decrypt(encrypted));
+        }
+
         private void showLoginDialog()
         {
             LoginWindow test = new LoginWindow(this);
@@ -455,7 +552,7 @@ namespace ArtsApp
             
             IPAddress host;
             bool check = IPAddress.TryParse(textBox7.Text, out host);
-
+            
             if (check)
             {
                 if (connection == null)
