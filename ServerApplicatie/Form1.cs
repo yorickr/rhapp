@@ -36,7 +36,7 @@ namespace ServerApplicatie
         private void StartServer(object sender, EventArgs e)
         {
             if (server == null) {
-                IPAddress ip = IPAddress.Parse(GetPublicIp());
+                IPAddress ip = IPAddress.Parse("127.0.0.1");
                 server = new TcpListener(IPAddress.Any, 1338);
                 DisplayOnScreen("Server is running...");
                 UpdateIP(ip.ToString());
@@ -111,15 +111,15 @@ namespace ServerApplicatie
             string ip = "";
             try
             {
-                string url = "http://checkip.dyndns.org";
+                string url = "http://icanhazip.com";
                 System.Net.WebRequest req = System.Net.WebRequest.Create(url);
                 System.Net.WebResponse resp = req.GetResponse();
                 System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
                 string response = sr.ReadToEnd().Trim();
-                string[] AllData = response.Split(':');
-                string dataString = AllData[1].Substring(1);
-                string[] data = dataString.Split('<');
-                ip = data[0];
+//                string[] AllData = response.Split(':');
+//                string dataString = AllData[1].Substring(1);
+//                string[] data = dataString.Split('<');
+                ip = response;
             }
             catch (Exception e) {
                 ip = "0.0.0.0";
