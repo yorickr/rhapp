@@ -1,9 +1,0 @@
-C:\Users\Arthur\Documents\TI2\ClientApp\bin\Debug\Client-ArtsApp.exe.config
-C:\Users\Arthur\Documents\TI2\ClientApp\obj\Debug\Client-ArtsApp.exe
-C:\Users\Arthur\Documents\TI2\ClientApp\obj\Debug\Client-ArtsApp.pdb
-C:\Users\Arthur\Documents\TI2\ClientApp\bin\Debug\Client-ArtsApp.exe
-C:\Users\Arthur\Documents\TI2\ClientApp\bin\Debug\Client-ArtsApp.pdb
-C:\Users\Arthur\Documents\TI2\ClientApp\obj\Debug\ClientApp.csprojResolveAssemblyReference.cache
-C:\Users\Arthur\Documents\TI2\ClientApp\obj\Debug\ClientApp.Form1.resources
-C:\Users\Arthur\Documents\TI2\ClientApp\obj\Debug\Client_ArtsApp.Properties.Resources.resources
-C:\Users\Arthur\Documents\TI2\ClientApp\obj\Debug\ClientApp.csproj.GenerateResource.Cache
