@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -52,7 +53,7 @@ namespace ServerApplicatie
         {
             foreach (Client c in clients)
             {
-                c.StopConnection();
+                c.SafeData();
             }
             server.Stop();
             DisplayOnScreen("Server stopped!");
@@ -259,8 +260,12 @@ namespace ServerApplicatie
         //Stuurt een bericht naar de client/
         public void WriteMessage(String message)
         {
-            writer.WriteLine(message);
-            writer.Flush();
+            if (message.Length > 1)
+            {
+                string[] messages = {message};
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(client.GetStream(), messages);
+            }
         }
 
 
@@ -374,14 +379,17 @@ namespace ServerApplicatie
         //Streamt data van de client door naar de dokter, indien hier om gevraagd wordt.
         private void StreamData(String data)
         {
-            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), data + ".dat");
+            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "clientdata", data + ".dat");
             if (File.Exists(path))
             {
+                application.DisplayOnScreen("Looking up data from " + data);
                 String[] lines = File.ReadAllLines(path);
-                foreach (String line in lines)
-                {
-                    WriteMessage("02"+ line);
-                }
+                WriteMessage("02Log van " + data);
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(client.GetStream(), lines);
+            } else
+            {
+                application.DisplayOnScreen("File not found!");
             }
         }
 
