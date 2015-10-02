@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -18,6 +19,7 @@ namespace ArtsApp
     public partial class Form1 : Form
     {
         private SerialPort port;
+        private bool LogInc;
         private delegate void SetTextCallback(TextBox txt,string text);
         private TcpClient connection;
         private string currentRead="";
@@ -261,9 +263,20 @@ namespace ArtsApp
 
         private String ReadTextMessage(TcpClient client)
         {
-
-            StreamReader stream = new StreamReader(client.GetStream(), Encoding.ASCII);
-            string line = stream.ReadLine();
+            BinaryFormatter formatter = new BinaryFormatter();
+            string[] lines = (string[])formatter.Deserialize(client.GetStream());
+            string line = "";
+            if (lines.Length == 1)
+            {
+                line = lines[0];
+            }
+            else
+            {
+                foreach(String e in lines)
+                {
+                    Invoke(new SetTextDeleg(DisplayToUI), new object[] { e + Environment.NewLine });
+                }
+            }
 
 
             return line;
@@ -273,19 +286,17 @@ namespace ArtsApp
         {
             if(connection!=null)
             {
-                WriteTextMessage(connection, "02-" + LogName.Text);
-                String current;
-                while ((current = ReadTextMessage(connection) ) != null)
-                {
-                    Invoke(new SetTextDeleg(DisplayToUI), new object[] { current + Environment.NewLine });
-                }
+                LogShow.ResetText();
+                WriteTextMessage(connection, "02" + LogName.Text);
+                
+               
             }
         }
 
         private void DisplayToUI(string displayData)
         {
-            richTextBox1.AppendText(displayData);
-            richTextBox1.ScrollToCaret();
+            LogShow.AppendText(displayData);
+            LogShow.ScrollToCaret();
 
         }
 
@@ -316,16 +327,26 @@ namespace ArtsApp
 
         private void HandleMessages(string data)
         {
-            switch (data.Substring(0, 2))
+            if (data.Length > 1)
             {
-                case "01": DataFromClient(data.Substring(2)); break;
-                case "02": break;
-                case "04": break;
-                case "05": NewPatient(data.Substring(2)); break;
-                case "07": CheckLogin(data.Substring(2));break;        
-                default: break;
+                switch (data.Substring(0, 2))
+                {
+                    case "01": DataFromClient(data.Substring(2)); break;
+                    case "02": ReceiveLogData(data.Substring(2)); break;
+                    case "04": break;
+                    case "05": NewPatient(data.Substring(2)); break;
+                    case "07": CheckLogin(data.Substring(2)); break;
+                    default: break;
+                }
             }
         }
+
+        private void ReceiveLogData(string data)
+        {
+            Invoke(new SetTextDeleg(DisplayToUI), new object[] { data + Environment.NewLine });
+            LogInc = true;
+        }
+
 
         private void NewPatient(string data)
         {

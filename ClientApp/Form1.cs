@@ -8,6 +8,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -298,8 +299,13 @@ namespace ClientApp
         private String ReadTextMessage(TcpClient client)
         {
 
-            StreamReader stream = new StreamReader(client.GetStream(), Encoding.ASCII);
-            string line = stream.ReadLine();
+            BinaryFormatter formatter = new BinaryFormatter();
+            string[] lines = (string[])formatter.Deserialize(client.GetStream());
+            string line = "";
+            if (lines.Length == 1)
+            {
+                line = lines[0];
+            }
 
 
             return line;
