@@ -46,7 +46,7 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.Update = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.LogShow = new System.Windows.Forms.RichTextBox();
             this.LoadLog = new System.Windows.Forms.Button();
             this.LogName = new System.Windows.Forms.TextBox();
             this.Disconnect = new System.Windows.Forms.Button();
@@ -214,17 +214,17 @@
             this.Update.UseVisualStyleBackColor = true;
             this.Update.Click += new System.EventHandler(this.button3_Click);
             // 
-            // richTextBox1
+            // LogShow
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(15, 180);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(281, 96);
-            this.richTextBox1.TabIndex = 27;
-            this.richTextBox1.Text = "";
+            this.LogShow.Location = new System.Drawing.Point(15, 180);
+            this.LogShow.Name = "LogShow";
+            this.LogShow.Size = new System.Drawing.Size(396, 140);
+            this.LogShow.TabIndex = 27;
+            this.LogShow.Text = "";
             // 
             // LoadLog
             // 
-            this.LoadLog.Location = new System.Drawing.Point(155, 282);
+            this.LoadLog.Location = new System.Drawing.Point(155, 326);
             this.LoadLog.Name = "LoadLog";
             this.LoadLog.Size = new System.Drawing.Size(75, 23);
             this.LoadLog.TabIndex = 28;
@@ -234,7 +234,7 @@
             // 
             // LogName
             // 
-            this.LogName.Location = new System.Drawing.Point(15, 284);
+            this.LogName.Location = new System.Drawing.Point(15, 328);
             this.LogName.Name = "LogName";
             this.LogName.Size = new System.Drawing.Size(122, 20);
             this.LogName.TabIndex = 29;
@@ -251,22 +251,22 @@
             // 
             // chatBox
             // 
-            this.chatBox.Location = new System.Drawing.Point(365, 180);
+            this.chatBox.Location = new System.Drawing.Point(447, 180);
             this.chatBox.Name = "chatBox";
-            this.chatBox.Size = new System.Drawing.Size(281, 96);
+            this.chatBox.Size = new System.Drawing.Size(281, 140);
             this.chatBox.TabIndex = 31;
             this.chatBox.Text = "";
             // 
             // MessageBox
             // 
-            this.MessageBox.Location = new System.Drawing.Point(365, 285);
+            this.MessageBox.Location = new System.Drawing.Point(447, 328);
             this.MessageBox.Name = "MessageBox";
             this.MessageBox.Size = new System.Drawing.Size(216, 20);
             this.MessageBox.TabIndex = 32;
             // 
             // sendmsg
             // 
-            this.sendmsg.Location = new System.Drawing.Point(594, 283);
+            this.sendmsg.Location = new System.Drawing.Point(688, 324);
             this.sendmsg.Name = "sendmsg";
             this.sendmsg.Size = new System.Drawing.Size(75, 23);
             this.sendmsg.TabIndex = 33;
@@ -332,7 +332,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(775, 315);
+            this.ClientSize = new System.Drawing.Size(775, 360);
             this.Controls.Add(this.Login);
             this.Controls.Add(this.raceSel1);
             this.Controls.Add(this.raceSel2);
@@ -345,7 +345,7 @@
             this.Controls.Add(this.Disconnect);
             this.Controls.Add(this.LogName);
             this.Controls.Add(this.LoadLog);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.LogShow);
             this.Controls.Add(this.Update);
             this.Controls.Add(this.textBox8);
             this.Controls.Add(this.comboBox2);
@@ -391,7 +391,7 @@
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.Button Update;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox LogShow;
         private System.Windows.Forms.Button LoadLog;
         private System.Windows.Forms.TextBox LogName;
         private System.Windows.Forms.Button Disconnect;
