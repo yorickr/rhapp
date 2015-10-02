@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication2", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerApplicatie", "ServerApplicatie\ServerApplicatie.csproj", "{23AFE5CB-B9FE-44A5-8FD6-A19E69C39D87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApp", "ClientApp\ClientApp.csproj", "{D4432C4D-2AF1-45E2-AB96-8B64221FB511}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtsApp", "ArtsApp\ArtsApp.csproj", "{9826BB84-3C7B-43DA-89D8-9BC11254E794}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{23AFE5CB-B9FE-44A5-8FD6-A19E69C39D87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23AFE5CB-B9FE-44A5-8FD6-A19E69C39D87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23AFE5CB-B9FE-44A5-8FD6-A19E69C39D87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4432C4D-2AF1-45E2-AB96-8B64221FB511}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4432C4D-2AF1-45E2-AB96-8B64221FB511}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4432C4D-2AF1-45E2-AB96-8B64221FB511}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4432C4D-2AF1-45E2-AB96-8B64221FB511}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9826BB84-3C7B-43DA-89D8-9BC11254E794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9826BB84-3C7B-43DA-89D8-9BC11254E794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9826BB84-3C7B-43DA-89D8-9BC11254E794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9826BB84-3C7B-43DA-89D8-9BC11254E794}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

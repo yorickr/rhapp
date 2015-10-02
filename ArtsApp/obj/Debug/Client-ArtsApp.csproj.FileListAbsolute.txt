@@ -7,12 +7,3 @@ C:\Users\Arthur\Google Drive\Virtual Studio\Client-ArtsApp\Client-ArtsApp\obj\De
 C:\Users\Arthur\Google Drive\Virtual Studio\Client-ArtsApp\Client-ArtsApp\obj\Debug\Client-ArtsApp.csproj.GenerateResource.Cache
 C:\Users\Arthur\Google Drive\Virtual Studio\Client-ArtsApp\Client-ArtsApp\obj\Debug\Client-ArtsApp.exe
 C:\Users\Arthur\Google Drive\Virtual Studio\Client-ArtsApp\Client-ArtsApp\obj\Debug\Client-ArtsApp.pdb
-C:\Users\Yorick\documents\visual studio 2015\Projects\Test\Client-ArtsApp\bin\Debug\Client-ArtsApp.exe.config
-C:\Users\Yorick\documents\visual studio 2015\Projects\Test\Client-ArtsApp\bin\Debug\Client-ArtsApp.exe
-C:\Users\Yorick\documents\visual studio 2015\Projects\Test\Client-ArtsApp\bin\Debug\Client-ArtsApp.pdb
-C:\Users\Yorick\documents\visual studio 2015\Projects\Test\Client-ArtsApp\obj\Debug\Client-ArtsApp.csprojResolveAssemblyReference.cache
-C:\Users\Yorick\documents\visual studio 2015\Projects\Test\Client-ArtsApp\obj\Debug\Client_ArtsApp.Form1.resources
-C:\Users\Yorick\documents\visual studio 2015\Projects\Test\Client-ArtsApp\obj\Debug\Client_ArtsApp.Properties.Resources.resources
-C:\Users\Yorick\documents\visual studio 2015\Projects\Test\Client-ArtsApp\obj\Debug\Client-ArtsApp.csproj.GenerateResource.Cache
-C:\Users\Yorick\documents\visual studio 2015\Projects\Test\Client-ArtsApp\obj\Debug\Client-ArtsApp.exe
-C:\Users\Yorick\documents\visual studio 2015\Projects\Test\Client-ArtsApp\obj\Debug\Client-ArtsApp.pdb

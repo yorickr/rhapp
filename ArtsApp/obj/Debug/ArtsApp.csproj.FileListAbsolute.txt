@@ -1,0 +1,20 @@
+C:\Users\Arthur\Documents\TI2\ArtsApp\bin\Debug\Client-ArtsApp.exe.config
+C:\Users\Arthur\Documents\TI2\ArtsApp\obj\Debug\Client-ArtsApp.exe
+C:\Users\Arthur\Documents\TI2\ArtsApp\obj\Debug\Client-ArtsApp.pdb
+C:\Users\Arthur\Documents\TI2\ArtsApp\bin\Debug\Client-ArtsApp.exe
+C:\Users\Arthur\Documents\TI2\ArtsApp\bin\Debug\Client-ArtsApp.pdb
+C:\Users\Arthur\Documents\TI2\ArtsApp\obj\Debug\ArtsApp.csprojResolveAssemblyReference.cache
+C:\Users\Arthur\Documents\TI2\ArtsApp\obj\Debug\ArtsApp.Form1.resources
+C:\Users\Arthur\Documents\TI2\ArtsApp\obj\Debug\Client_ArtsApp.Properties.Resources.resources
+C:\Users\Arthur\Documents\TI2\ArtsApp\obj\Debug\ArtsApp.csproj.GenerateResource.Cache
+C:\Users\Arthur\Documents\TI2\ArtsApp\obj\Debug\ArtsApp.LoginWindow.resources
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ArtsApp\bin\Debug\Client-ArtsApp.exe.config
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ArtsApp\bin\Debug\Client-ArtsApp.exe
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ArtsApp\bin\Debug\Client-ArtsApp.pdb
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ArtsApp\obj\Debug\ArtsApp.csprojResolveAssemblyReference.cache
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ArtsApp\obj\Debug\ArtsApp.Form1.resources
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ArtsApp\obj\Debug\ArtsApp.LoginWindow.resources
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ArtsApp\obj\Debug\Client_ArtsApp.Properties.Resources.resources
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ArtsApp\obj\Debug\ArtsApp.csproj.GenerateResource.Cache
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ArtsApp\obj\Debug\Client-ArtsApp.exe
+C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ArtsApp\obj\Debug\Client-ArtsApp.pdb
