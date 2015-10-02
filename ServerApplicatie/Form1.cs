@@ -52,7 +52,7 @@ namespace ServerApplicatie
         {
             foreach (Client c in clients)
             {
-                c.SafeData();
+                c.StopConnection();
             }
             server.Stop();
             DisplayOnScreen("Server stopped!");
@@ -108,15 +108,22 @@ namespace ServerApplicatie
         //Geeft het public ip adres.
         private String GetPublicIp()
         {
-            string url = "http://checkip.dyndns.org";
-            System.Net.WebRequest req = System.Net.WebRequest.Create(url);
-            System.Net.WebResponse resp = req.GetResponse();
-            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
-            string response = sr.ReadToEnd().Trim();
-            string[] AllData = response.Split(':');
-            string dataString = AllData[1].Substring(1);
-            string[] data = dataString.Split('<');
-            string ip = data[0];
+            string ip = "";
+            try
+            {
+                string url = "http://checkip.dyndns.org";
+                System.Net.WebRequest req = System.Net.WebRequest.Create(url);
+                System.Net.WebResponse resp = req.GetResponse();
+                System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+                string response = sr.ReadToEnd().Trim();
+                string[] AllData = response.Split(':');
+                string dataString = AllData[1].Substring(1);
+                string[] data = dataString.Split('<');
+                ip = data[0];
+            }
+            catch (Exception e) {
+                ip = "0.0.0.0";
+            }
             return ip;
         }
 
@@ -220,10 +227,10 @@ namespace ServerApplicatie
                     HandleData(reader.ReadLine());
                 } catch (Exception e)
                 {
-                    if (isAlive) { 
-                        application.DisplayOnScreen("Error on client " + clientname + "! Closing client!");
-                        StopConnection();
-                    }
+                  if (isAlive) { 
+                      application.DisplayOnScreen("Error on client " + clientname + "! Closing client!");
+                      StopConnection();
+                  }
                 }
             }
         }
@@ -277,9 +284,24 @@ namespace ServerApplicatie
                 case "04": Chat(data.Substring(2)); break;
                 case "06": Race(data.Substring(2)); break;
                 case "07": DoctorConnecting(data.Substring(2)); break;
+                case "08": SendCommando(data.Substring(2)); break;
                 default: application.DisplayOnScreen("Incorrect message send!"); break;
             }
         }
+
+
+        private void SendCommando(string data)
+        {
+            string[] splitData = data.Split(':');
+            foreach(Client client in application.GetClients())
+            {
+                if (client.clientname == splitData[0])
+                {
+                    client.WriteMessage("08" + splitData[1]);
+                }
+            }
+        }
+
 
         //Verifieert of de gebruiker daadwerkelijk de dokter is.
         //Stuurt daarna een authenticatie bericht.
@@ -287,13 +309,14 @@ namespace ServerApplicatie
         {
             string[] splitData = data.Split(':');
             clientname = splitData[0];
-            if (splitData[1] == "password")
-            {
+            //if (splitData[1] == "password")
+            //{
                 WriteMessage("07Authentication Succesfull!");
                 isDoctor = true;
-            } else{
-                WriteMessage("07Authentication failed!");
-            }
+            //} else{
+              //  WriteMessage("07Authentication Failed!");
+            //}
+            application.SendClientsToDoctors();
         }
 
 
@@ -417,7 +440,7 @@ namespace ServerApplicatie
         //Sluit de connectie met een client af.
         //Hij slaat de data van de client eerst op.
         //Dan sluit hij de thread af.
-        private void StopConnection()
+        public void StopConnection()
         {
             SafeData();
             application.DisplayOnScreen("Connection closed with " + clientname);
