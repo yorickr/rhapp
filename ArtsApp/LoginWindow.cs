@@ -12,15 +12,23 @@ namespace ArtsApp
 {
     public partial class LoginWindow : Form
     {
-        public bool done { get; set; } = false;
+        private Form1 parent;
+
         
 
-        public LoginWindow()
+        public LoginWindow(Form1 parent)
         {
             InitializeComponent();
+            this.parent = parent;
+
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void setCallback(Action a)
         {
 
         }
@@ -38,7 +46,7 @@ namespace ArtsApp
 
         private void Login_Click(object sender, EventArgs e)
         {
-            done = true;
+            parent.setLoginInfo(returnUsername(), returnPassWord());
             this.Close();
         }
     }
