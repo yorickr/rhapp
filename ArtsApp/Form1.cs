@@ -51,7 +51,7 @@ namespace ArtsApp
 
         public void listCommands()
         {
-            string[] commands = new string[] { "Tijd", "Afstand", "Power", "KJ"   };
+            string[] commands = new string[] { "Tijd", "Afstand", "Power", "KJ", "Reset"   };
             foreach(String s in commands)
             {
                 comboBox2.Items.Add(s);
@@ -202,20 +202,26 @@ namespace ArtsApp
             switch (comboBox2.SelectedItem.ToString())
             {
                 case "Tijd":
-                    sendMultipleMessages(new string[] { "CM", "PT " + textBox8.Text });
+                    //sendMultipleMessages(new string[] { "CM", "PT " + textBox8.Text });
+                    WriteTextMessage(connection, "08" + allClients.SelectedItem.ToString() + ":CM PT " + textBox8.Text);
                     break;
                 case "Afstand":
-                    sendMultipleMessages(new string[] { "CM", "PD  " + Convert.ToDouble(textBox8.Text) * 10 });
+                    //sendMultipleMessages(new string[] { "CM", "PD  " + Convert.ToDouble(textBox8.Text) * 10 });
+                    WriteTextMessage(connection, "08" + allClients.SelectedItem.ToString() + ":CM PD " + Convert.ToDouble(textBox8.Text) * 10);
                     break;
 
                 case "Power":
-                    sendMultipleMessages(new string[] { "CM", "PW " + textBox8.Text });
+                    //sendMultipleMessages(new string[] { "CM", "PW " + textBox8.Text });
+                    WriteTextMessage(connection, "08" + allClients.SelectedItem.ToString() + ":CM PW " + textBox8.Text);
                     break;
 
                 case "KJ":
-                    sendMultipleMessages(new string[] { "CM", "PE  " + textBox8.Text });
+                    //sendMultipleMessages(new string[] { "CM", "PE  " + textBox8.Text });
+                    WriteTextMessage(connection, "08" + allClients.SelectedItem.ToString() + ":CM PE " + textBox8.Text);
                     break;
-                
+                case "Reset":
+                    WriteTextMessage(connection, "08" + allClients.SelectedItem.ToString() + ":RS");
+                    break;
 
             }
 

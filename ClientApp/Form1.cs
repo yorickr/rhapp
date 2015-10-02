@@ -134,7 +134,7 @@ namespace ClientApp
                 updateField(textBox5, values[2]);
                 updateField(textBox2, values[3]);
                 updateField(textBox3, values[4]);
-                updateField(textBox6, values[5]);
+               // updateField(textBox6, values[5]);
                 updateField(textBox1, values[6]);
             }
             catch(Exception e)
@@ -210,6 +210,36 @@ namespace ClientApp
         //    }
         //}
 
+        private void guus(String data)
+        {
+            data = data.Replace("CM ", "");
+            //updateField(textBox6, data.Substring(3));
+            switch (data.Substring(0,2))
+            {
+                case "PT":
+                    sendMultipleMessages(new string[] { "CM", "PT " + data.Substring(3) });
+                    break;
+                case "PD":
+                    //sendMessage("RS");
+                    sendMultipleMessages(new string[] { "CM", "PD " + data.Substring(3) });
+                    break;
+                case "PW":
+                    //sendMessage("RS");
+                    sendMultipleMessages(new string[] { "CM", "PW " + data.Substring(3) });
+                    break;
+                case "PE":
+                    //sendMessage("RS");
+                    sendMultipleMessages(new string[] { "CM", "PE " + data.Substring(3) });
+                    break;
+                case "RS":
+                    sendMessage("RS");
+                    break;
+
+            }
+
+            
+        }
+
         private void ConnectServer_Click(object sender, EventArgs e)
         {
             IPAddress host;
@@ -219,6 +249,10 @@ namespace ClientApp
             {
                 connection = new TcpClient(host.ToString(), 1338);
                 WriteTextMessage(connection, "00" + username.Text);
+                Thread con = new Thread(new ThreadStart(Client));
+                con.Start();
+
+
             }
         }
 
@@ -226,7 +260,21 @@ namespace ClientApp
         {
             while (true)
             {
-                ReadTextMessage(connection);
+                HandleMessages(ReadTextMessage(connection));
+            }
+        }
+
+
+        private void HandleMessages(string data)
+        {
+            switch (data.Substring(0, 2))
+            {
+                case "01": break;
+                case "04": break;
+                case "07": break;
+                case "08":
+                    guus(data.Substring(2)); break;
+                default: break;
             }
         }
 
