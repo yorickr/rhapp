@@ -281,6 +281,7 @@
             this.allClients.Name = "allClients";
             this.allClients.Size = new System.Drawing.Size(121, 21);
             this.allClients.TabIndex = 35;
+            this.allClients.SelectedIndexChanged += new System.EventHandler(this.allClients_SelectedIndexChanged);
             // 
             // label7
             // 

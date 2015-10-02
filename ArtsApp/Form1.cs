@@ -23,13 +23,20 @@ namespace ArtsApp
         private string currentRead="";
         private delegate void SetTextDeleg(string data);
 
+        private List<Patient> patients;
+
         private String USERNAME, PASSWORD;
+        private string selected;
+
+        private delegate void addPatient(String test);
 
         public Form1()
         {
             InitializeComponent();
             ListPorts();
             listCommands();
+            patients = new List<Patient>();
+            selected = "";
         }
 
         public void ListPorts()
@@ -77,10 +84,11 @@ namespace ArtsApp
                 {
                     while (true)
                     {
-                        sendMessage("ST");
+                       // sendMessage("ST");
                         if(connection!=null)
                         {
-                            WriteTextMessage(connection, "01-" + currentRead);
+                           // WriteTextMessage(connection, "01-" + currentRead);
+                          
                         }
                         Thread.Sleep(1000);
                     }
@@ -210,6 +218,8 @@ namespace ArtsApp
                 
 
             }
+
+            
         }
 
         private void ConnectServer_Click(object sender, EventArgs e)
@@ -290,7 +300,120 @@ namespace ArtsApp
 
         }
 
+        private void Connection()
+        {
+            while (true)
+            {
+                HandleMessages(ReadTextMessage(connection));
+            }
+        }
+
+        private void HandleMessages(string data)
+        {
+            switch (data.Substring(0, 2))
+            {
+                case "01": DataFromClient(data.Substring(2)); break;
+                case "02": break;
+                case "04": break;
+                case "05": NewPatient(data.Substring(2)); break;
+                case "07": CheckLogin(data.Substring(2));break;        
+                default: break;
+            }
+        }
+
+        private void NewPatient(string data)
+        {
+            bool isAdded = false;
+            foreach(Patient p in patients)
+            {
+                if (p.username == data)
+                {
+                    isAdded = false;
+                }
+            }
+
+            if (!isAdded)
+            {
+                Patient p = new Patient(data);
+                patients.Add(p);
+                UpdateAllClients(p.username);
+            }
+        }
+
+        private void UpdateAllClients(string text)
+        {
+            if (allClients.InvokeRequired)
+            {
+                Invoke(new addPatient(UpdateAllClients), new object[] { text });
+            } else
+            {
+                allClients.Items.Add(text);
+            }
+        }
+
+        private void CheckLogin(string data)
+        {
+            if (data.Contains("Failed"))
+            {
+                showLoginDialog();
+            }
+        }
+
+        private void V(string data)
+        {
+
+        }
+
+        private void DataFromClient(string data)
+        {
+            string[] splitData = data.Split(':');
+            foreach(Patient p in patients)
+            {
+                if (p.username == splitData[0])
+                {
+                    p.currentBikeData = splitData[1];
+
+                    if (p.username == selected)
+                    {
+                        UpdateStatus(p.currentBikeData);
+                    }
+                }
+            }
+        }
+
         private void Login_Click(object sender, EventArgs e)
+        {
+            showLoginDialog();
+        }
+
+        private void allClients_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selected = allClients.SelectedItem.ToString();
+
+            foreach(Patient p in patients)
+            {
+                if (p.username == selected)
+                {
+                    String[] values = p.currentBikeData.Split('\t');
+                    try
+                    {
+                        updateField(textBox4, values[1]);
+                        updateField(textBox5, values[2]);
+                        updateField(textBox2, values[3]);
+                        updateField(textBox3, values[4]);
+                        updateField(textBox6, values[5]);
+                        updateField(textBox1, values[6]);
+                    }
+                    catch
+                    {
+
+                    }
+
+                }
+            }
+        }
+
+        private void showLoginDialog()
         {
             LoginWindow test = new LoginWindow();
 
@@ -305,8 +428,23 @@ namespace ArtsApp
                     PASSWORD = test.returnPassWord();
 
                 }
+
+
             }
 
+            IPAddress host;
+            bool check = IPAddress.TryParse(textBox7.Text, out host);
+
+            if (check)
+            {
+                if (connection == null)
+                {
+                    connection = new TcpClient(host.ToString(), 1338);
+                    Thread con = new Thread(new ThreadStart(Connection));
+                    con.Start();
+                }
+                WriteTextMessage(connection, "07" + "Test" + ":" + "pass");
+            }
         }
     }
 }
