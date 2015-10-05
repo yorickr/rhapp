@@ -22,3 +22,9 @@ C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ServerApplicatie\obj\
 C:\Users\Arthur\Documents\TI2\ServerApplicatie\bin\Debug\ServerApplicatie.exe.config
 C:\Users\Arthur\Documents\TI2\ServerApplicatie\obj\Debug\ServerApplicatie.exe
 C:\Users\Arthur\Documents\TI2\ServerApplicatie\obj\Debug\ServerApplicatie.pdb
+C:\Users\Arthur\Documents\TI2\ServerApplicatie\bin\Debug\ServerApplicatie.exe
+C:\Users\Arthur\Documents\TI2\ServerApplicatie\bin\Debug\ServerApplicatie.pdb
+C:\Users\Arthur\Documents\TI2\ServerApplicatie\obj\Debug\ServerApplicatie.csprojResolveAssemblyReference.cache
+C:\Users\Arthur\Documents\TI2\ServerApplicatie\obj\Debug\ServerApplicatie.Form1.resources
+C:\Users\Arthur\Documents\TI2\ServerApplicatie\obj\Debug\ServerApplicatie.Properties.Resources.resources
+C:\Users\Arthur\Documents\TI2\ServerApplicatie\obj\Debug\ServerApplicatie.csproj.GenerateResource.Cache

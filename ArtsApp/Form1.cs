@@ -21,7 +21,6 @@ namespace ArtsApp
     public partial class Form1 : Form
     {
         private SerialPort port;
-        private bool LogInc;
         private delegate void SetTextCallback(TextBox txt,string text);
         private TcpClient connection;
         private string currentRead="";
@@ -398,7 +397,6 @@ namespace ArtsApp
         private void ReceiveLogData(string data)
         {
             Invoke(new SetTextDeleg(DisplayToUI), new object[] { data + Environment.NewLine });
-            LogInc = true;
         }
 
 
@@ -622,7 +620,10 @@ namespace ArtsApp
                     Thread con = new Thread(new ThreadStart(Connection));
                     con.Start();
                 }
-                WriteTextMessage(connection, "07" + USERNAME + ":" + PASSWORD);
+                WriteTextMessage(connection, "07" + USERNAME + ":" + Encrypt(PASSWORD));
+
+
+                
             }
         }
     }
