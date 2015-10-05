@@ -301,6 +301,7 @@
             this.Race.TabIndex = 38;
             this.Race.Text = "Race";
             this.Race.UseVisualStyleBackColor = true;
+            this.Race.Click += new System.EventHandler(this.Race_Click);
             // 
             // raceSel2
             // 

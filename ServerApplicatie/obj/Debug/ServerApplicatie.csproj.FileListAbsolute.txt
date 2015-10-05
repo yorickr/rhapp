@@ -19,3 +19,6 @@ C:\Users\guusv_000\Documents\rhapp\ServerApplicatie\obj\Debug\ServerApplicatie.p
 C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ServerApplicatie\bin\Debug\ServerApplicatie.exe.config
 C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ServerApplicatie\obj\Debug\ServerApplicatie.exe
 C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ServerApplicatie\obj\Debug\ServerApplicatie.pdb
+C:\Users\Arthur\Documents\TI2\ServerApplicatie\bin\Debug\ServerApplicatie.exe.config
+C:\Users\Arthur\Documents\TI2\ServerApplicatie\obj\Debug\ServerApplicatie.exe
+C:\Users\Arthur\Documents\TI2\ServerApplicatie\obj\Debug\ServerApplicatie.pdb
