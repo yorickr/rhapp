@@ -348,7 +348,7 @@ namespace ClientApp
             box.ResetText();
             box.AppendText("RACING WITH:" + values[0]);
 
-            String[] data = values[1].Split(' ');
+            String[] data = values[1].Split('\t');
 
             box.AppendText("Afstand: " + data[3]);
             box.AppendText("Tijd: " + data[6]);
