@@ -346,12 +346,12 @@ namespace ClientApp
         private void DisplayToRaceInfo(RichTextBox box, String[] values)
         {
             box.ResetText();
-            box.AppendText("RACING WITH:" + values[0]);
+            box.AppendText("RACING WITH:" + values[0] + Environment.NewLine);
 
             String[] data = values[1].Split('\t');
 
-            box.AppendText("Afstand: " + data[3]);
-            box.AppendText("Tijd: " + data[6]);
+            box.AppendText("Afstand: " + data[3] + Environment.NewLine);
+            box.AppendText("Tijd: " + data[6] + Environment.NewLine);
            
 
             box.ScrollToCaret();

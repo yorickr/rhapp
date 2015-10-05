@@ -355,7 +355,7 @@ namespace ArtsApp
             {
                 if (p.username == data)
                 {
-                    isAdded = false;
+                    isAdded = true;
                 }
             }
 
