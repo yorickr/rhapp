@@ -37,7 +37,7 @@ namespace ServerApplicatie
         private void StartServer(object sender, EventArgs e)
         {
             if (server == null) {
-                IPAddress ip = IPAddress.Parse("127.0.0.1");
+                IPAddress ip = IPAddress.Parse(GetPublicIp());
                 server = new TcpListener(IPAddress.Any, 1338);
                 DisplayOnScreen("Server is running...");
                 UpdateIP(ip.ToString());
@@ -51,10 +51,12 @@ namespace ServerApplicatie
         //Stopt de Server en slaat alle data op.
         private void StopServer(object sender, EventArgs e)
         {
-            foreach (Client c in clients)
-            {
-                c.SafeData();
+            for (int i = clients.Count - 1; i >= 0; i--) {
+                Client client = clients[i];
+                client.Stop();
+                clients.RemoveAt(i);
             }
+
             server.Stop();
             DisplayOnScreen("Server stopped!");
             server = null;
@@ -245,13 +247,13 @@ namespace ServerApplicatie
             this.data.Add(data);
             foreach(Client client in races)
             {
-                client.WriteMessage("06" + clientname + ":" + data);
+                client.WriteMessage("06" + clientname + "," + data);
             }
             foreach(Client client in application.GetClients())
             {
                 if (client.IsDoctor())
                 {
-                    client.WriteMessage("01" + clientname + ":" + data);
+                    client.WriteMessage("01" + clientname + "," + data);
                 }
             }
         }
@@ -345,8 +347,11 @@ namespace ServerApplicatie
                     client2 = c;
                 }
             }
-            client1.AddRace(client2);
-            client2.AddRace(client1);
+            if (client1 != null && client2 != null && client1 != client2)
+            {
+                client1.AddRace(client2);
+                client2.AddRace(client1);
+            }
         }
 
         //Controleert of het bericht door een dokter wordt verstuurd.
@@ -379,17 +384,24 @@ namespace ServerApplicatie
         //Streamt data van de client door naar de dokter, indien hier om gevraagd wordt.
         private void StreamData(String data)
         {
-            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "clientdata", data + ".dat");
-            if (File.Exists(path))
+            if (isDoctor)
             {
-                application.DisplayOnScreen("Looking up data from " + data);
-                String[] lines = File.ReadAllLines(path);
-                WriteMessage("02Log van " + data);
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(client.GetStream(), lines);
+                string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "clientdata", data + ".dat");
+                if (File.Exists(path))
+                {
+                    application.DisplayOnScreen("Looking up data from " + data);
+                    String[] lines = File.ReadAllLines(path);
+                    WriteMessage("02Log van " + data);
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(client.GetStream(), lines);
+                }
+                else
+                {
+                    application.DisplayOnScreen("File not found!");
+                }
             } else
             {
-                application.DisplayOnScreen("File not found!");
+                application.DisplayOnScreen("A stranger tried to look up the data from " + data);
             }
         }
 
@@ -455,6 +467,14 @@ namespace ServerApplicatie
             isAlive = false;
             this.thread.Abort();
             application.RemoveClient(this);
+        }
+
+        public void Stop()
+        {
+            SafeData();
+            application.DisplayOnScreen("Connection closed with " + clientname);
+            isAlive = false;
+            this.thread.Abort();
         }
 
     }
