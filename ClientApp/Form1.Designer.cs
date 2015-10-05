@@ -52,6 +52,7 @@
             this.MessageBox = new System.Windows.Forms.TextBox();
             this.sendmsg = new System.Windows.Forms.Button();
             this.username = new System.Windows.Forms.TextBox();
+            this.RaceInfo = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -262,11 +263,20 @@
             this.username.Size = new System.Drawing.Size(84, 20);
             this.username.TabIndex = 34;
             // 
+            // RaceInfo
+            // 
+            this.RaceInfo.Location = new System.Drawing.Point(12, 147);
+            this.RaceInfo.Name = "RaceInfo";
+            this.RaceInfo.Size = new System.Drawing.Size(161, 129);
+            this.RaceInfo.TabIndex = 35;
+            this.RaceInfo.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(681, 315);
+            this.Controls.Add(this.RaceInfo);
             this.Controls.Add(this.username);
             this.Controls.Add(this.sendmsg);
             this.Controls.Add(this.MessageBox);
@@ -293,6 +303,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "Form1";
             this.Text = "ClientApp";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -324,6 +335,7 @@
         private System.Windows.Forms.TextBox MessageBox;
         private System.Windows.Forms.Button sendmsg;
         private System.Windows.Forms.TextBox username;
+        private System.Windows.Forms.RichTextBox RaceInfo;
     }
 }
 

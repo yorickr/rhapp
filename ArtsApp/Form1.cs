@@ -32,12 +32,12 @@ namespace ArtsApp
         private String USERNAME, PASSWORD;
         private string selected;
 
-        private delegate void addPatient(String test);
+        private delegate void addPatient(ComboBox box,String test);
 
         public Form1()
         {
             InitializeComponent();
-            ListPorts();
+         
             listCommands();
             patients = new List<Patient>();
             selected = "";
@@ -358,7 +358,7 @@ namespace ArtsApp
             {
                 if (p.username == data)
                 {
-                    isAdded = false;
+                    isAdded = true;
                 }
             }
 
@@ -366,19 +366,23 @@ namespace ArtsApp
             {
                 Patient p = new Patient(data);
                 patients.Add(p);
-                UpdateAllClients(p.username);
+                UpdateAllClients(allClients,p.username);
+                UpdateAllClients(raceSel1, p.username);
+                UpdateAllClients(raceSel2, p.username);
             }
+
         }
 
-        private void UpdateAllClients(string text)
+        private void UpdateAllClients(ComboBox box , string text)
         {
-            if (allClients.InvokeRequired)
+            if (box.InvokeRequired)
             {
-                Invoke(new addPatient(UpdateAllClients), new object[] { text });
+                Invoke(new addPatient(UpdateAllClients),box, text);
             } else
             {
-                allClients.Items.Add(text);
+                box.Items.Add(text);
             }
+            
         }
 
         private void CheckLogin(string data)
@@ -396,7 +400,7 @@ namespace ArtsApp
 
         private void DataFromClient(string data)
         {
-            string[] splitData = data.Split(':');
+            string[] splitData = data.Split(',');
             foreach(Patient p in patients)
             {
                 if (p.username == splitData[0])
@@ -450,6 +454,11 @@ namespace ArtsApp
 
         }
 
+
+        private void Race_Click(object sender, EventArgs e)
+        {
+            WriteTextMessage(connection, "06" + raceSel1.SelectedItem.ToString() + ":" + raceSel2.SelectedItem.ToString());
+        }
         public void makeKeyPair()
         {
             var csp = new RSACryptoServiceProvider(2048);

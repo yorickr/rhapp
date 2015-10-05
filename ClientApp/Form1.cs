@@ -22,7 +22,8 @@ namespace ClientApp
         private delegate void SetTextCallback(TextBox txt,string text);
         private TcpClient connection;
         private string currentRead="";
-        private delegate void SetTextDeleg(string data);
+        private delegate void SetTextDeleg(RichTextBox box,string data);
+        private delegate void SetRaceInfo(RichTextBox box, string[] values);
 
         public Form1()
         {
@@ -270,13 +271,22 @@ namespace ClientApp
         {
             switch (data.Substring(0, 2))
             {
-                case "01": break;
                 case "04": break;
-                case "07": break;
+                case "06": RaceUpdate(data.Substring(2));
+                           break;
                 case "08":
                     guus(data.Substring(2)); break;
                 default: break;
             }
+        }
+
+        private void RaceUpdate(string v)
+        {
+            String[] values = v.Split(',');
+
+            Invoke(new SetRaceInfo(DisplayToRaceInfo), RaceInfo, values);
+
+
         }
 
         private void ConnectBike_Click(object sender, EventArgs e)
@@ -324,12 +334,29 @@ namespace ClientApp
         //    }
         //}
 
-        //private void DisplayToUI(string displayData)
-        //{
-        //    richTextBox1.AppendText(displayData);
-        //    richTextBox1.ScrollToCaret();
+        
 
-        //}
+        private void DisplayToUI(RichTextBox box, string displayData)
+        {
+            box.AppendText(displayData);
+            box.ScrollToCaret();
+
+        }
+
+        private void DisplayToRaceInfo(RichTextBox box, String[] values)
+        {
+            box.ResetText();
+            box.AppendText("RACING WITH:" + values[0] + Environment.NewLine);
+
+            String[] data = values[1].Split('\t');
+
+            box.AppendText("Afstand: " + data[3] + Environment.NewLine);
+            box.AppendText("Tijd: " + data[6] + Environment.NewLine);
+           
+
+            box.ScrollToCaret();
+
+        }
 
         private void Disconnect_Click(object sender, EventArgs e)
         {
@@ -339,6 +366,11 @@ namespace ClientApp
         }
 
         private void sendmsg_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }
