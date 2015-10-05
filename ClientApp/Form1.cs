@@ -284,7 +284,7 @@ namespace ClientApp
         {
             String[] values = v.Split(',');
 
-            Invoke(new SetRaceInfo(DisplayToRaceInfo), RaceInfo, new object[] { values});
+            Invoke(new SetRaceInfo(DisplayToRaceInfo), RaceInfo, values);
 
 
         }
