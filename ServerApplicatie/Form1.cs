@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -36,7 +37,7 @@ namespace ServerApplicatie
         private void StartServer(object sender, EventArgs e)
         {
             if (server == null) {
-                IPAddress ip = IPAddress.Parse(GetPublicIp());
+                IPAddress ip = IPAddress.Parse("127.0.0.1");
                 server = new TcpListener(IPAddress.Any, 1338);
                 DisplayOnScreen("Server is running...");
                 UpdateIP(ip.ToString());
@@ -52,7 +53,7 @@ namespace ServerApplicatie
         {
             foreach (Client c in clients)
             {
-                c.StopConnection();
+                c.SafeData();
             }
             server.Stop();
             DisplayOnScreen("Server stopped!");
@@ -111,15 +112,15 @@ namespace ServerApplicatie
             string ip = "";
             try
             {
-                string url = "http://checkip.dyndns.org";
+                string url = "http://icanhazip.com";
                 System.Net.WebRequest req = System.Net.WebRequest.Create(url);
                 System.Net.WebResponse resp = req.GetResponse();
                 System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
                 string response = sr.ReadToEnd().Trim();
-                string[] AllData = response.Split(':');
-                string dataString = AllData[1].Substring(1);
-                string[] data = dataString.Split('<');
-                ip = data[0];
+//                string[] AllData = response.Split(':');
+//                string dataString = AllData[1].Substring(1);
+//                string[] data = dataString.Split('<');
+                ip = response;
             }
             catch (Exception e) {
                 ip = "0.0.0.0";
@@ -259,8 +260,12 @@ namespace ServerApplicatie
         //Stuurt een bericht naar de client/
         public void WriteMessage(String message)
         {
-            writer.WriteLine(message);
-            writer.Flush();
+            if (message.Length > 1)
+            {
+                string[] messages = {message};
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(client.GetStream(), messages);
+            }
         }
 
 
@@ -374,14 +379,17 @@ namespace ServerApplicatie
         //Streamt data van de client door naar de dokter, indien hier om gevraagd wordt.
         private void StreamData(String data)
         {
-            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), data + ".dat");
+            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "clientdata", data + ".dat");
             if (File.Exists(path))
             {
+                application.DisplayOnScreen("Looking up data from " + data);
                 String[] lines = File.ReadAllLines(path);
-                foreach (String line in lines)
-                {
-                    WriteMessage("02"+ line);
-                }
+                WriteMessage("02Log van " + data);
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(client.GetStream(), lines);
+            } else
+            {
+                application.DisplayOnScreen("File not found!");
             }
         }
 
