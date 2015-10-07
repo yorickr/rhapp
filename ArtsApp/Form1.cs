@@ -45,7 +45,7 @@ namespace ArtsApp
             listCommands();
             patients = new List<Patient>();
             selected = "";
-            Test();
+           // Test();
         }
 
         public void ListPorts()
