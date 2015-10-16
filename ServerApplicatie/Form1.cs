@@ -224,7 +224,7 @@ namespace ServerApplicatie
 
         private void GenerateKeyPair_Click(object sender, EventArgs e)
         {
-            makeKeyPair();
+            //makeKeyPair();
         }
     }
 
@@ -271,14 +271,19 @@ namespace ServerApplicatie
         {
             while (true)
             {
-                try {
-                    HandleData(reader.ReadLine());
-                } catch (Exception e)
+                string data = "";
+                try
                 {
-                  if (isAlive) { 
-                      application.DisplayOnScreen("Error on client " + clientname + "! Closing client!");
-                      StopConnection();
-                  }
+                    data = reader.ReadLine();
+                    HandleData(data);
+                }
+                catch (Exception e)
+                {
+                    if (isAlive)
+                    {
+                        application.DisplayOnScreen("Error on client " + clientname + "! Closing client!");
+                        StopConnection();
+                    }
                 }
             }
         }
@@ -337,7 +342,19 @@ namespace ServerApplicatie
                 case "06": Race(data.Substring(2)); break;
                 case "07": DoctorConnecting(data.Substring(2)); break;
                 case "08": SendCommando(data.Substring(2)); break;
+                case "09": Broadcast(data.Substring(2)); break;
                 default: application.DisplayOnScreen("Incorrect message send!"); break;
+            }
+        }
+
+        private void Broadcast(string data)
+        {
+            foreach(Client client in application.GetClients())
+            {
+                if (!client.isDoctor)
+                {
+                    client.WriteMessage("04" + data);
+                }
             }
         }
 
