@@ -603,6 +603,21 @@ namespace ArtsApp
             Console.WriteLine(Decrypt(encrypted));
         }
 
+        private void broadcast_Click(object sender, EventArgs e)
+        {
+            WriteTextMessage(connection, "09" + ":" + "(BROADCAST)"+ MessageBox.Text);
+
+            foreach (Patient p in patients)
+            {
+                if (p.username == allClients.SelectedItem.ToString())
+                {
+                    p.chathistory.Add("Doctor(BROADCAST): " + MessageBox.Text);
+                }
+            }
+            MessageBox.ResetText();
+            Invoke(new switchChat(UpdateChat));
+        }
+
         private void showLoginDialog()
         {
             LoginWindow test = new LoginWindow(this);

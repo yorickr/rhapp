@@ -59,6 +59,7 @@
             this.raceSel2 = new System.Windows.Forms.ComboBox();
             this.raceSel1 = new System.Windows.Forms.ComboBox();
             this.Login = new System.Windows.Forms.Button();
+            this.broadcast = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox1
@@ -253,7 +254,7 @@
             // 
             this.chatBox.Location = new System.Drawing.Point(447, 180);
             this.chatBox.Name = "chatBox";
-            this.chatBox.Size = new System.Drawing.Size(281, 140);
+            this.chatBox.Size = new System.Drawing.Size(336, 140);
             this.chatBox.TabIndex = 31;
             this.chatBox.Text = "";
             // 
@@ -266,9 +267,9 @@
             // 
             // sendmsg
             // 
-            this.sendmsg.Location = new System.Drawing.Point(688, 324);
+            this.sendmsg.Location = new System.Drawing.Point(669, 325);
             this.sendmsg.Name = "sendmsg";
-            this.sendmsg.Size = new System.Drawing.Size(75, 23);
+            this.sendmsg.Size = new System.Drawing.Size(42, 23);
             this.sendmsg.TabIndex = 33;
             this.sendmsg.Text = "Send ";
             this.sendmsg.UseVisualStyleBackColor = true;
@@ -329,11 +330,22 @@
             this.Login.UseVisualStyleBackColor = true;
             this.Login.Click += new System.EventHandler(this.Login_Click);
             // 
+            // broadcast
+            // 
+            this.broadcast.Location = new System.Drawing.Point(717, 325);
+            this.broadcast.Name = "broadcast";
+            this.broadcast.Size = new System.Drawing.Size(66, 23);
+            this.broadcast.TabIndex = 43;
+            this.broadcast.Text = "Broadcast";
+            this.broadcast.UseVisualStyleBackColor = true;
+            this.broadcast.Click += new System.EventHandler(this.broadcast_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(775, 360);
+            this.ClientSize = new System.Drawing.Size(787, 360);
+            this.Controls.Add(this.broadcast);
             this.Controls.Add(this.Login);
             this.Controls.Add(this.raceSel1);
             this.Controls.Add(this.raceSel2);
@@ -405,6 +417,7 @@
         private System.Windows.Forms.ComboBox raceSel2;
         private System.Windows.Forms.ComboBox raceSel1;
         private System.Windows.Forms.Button Login;
+        private System.Windows.Forms.Button broadcast;
     }
 }
 
