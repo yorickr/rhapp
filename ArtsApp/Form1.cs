@@ -609,10 +609,8 @@ namespace ArtsApp
 
             foreach (Patient p in patients)
             {
-                if (p.username == allClients.SelectedItem.ToString())
-                {
+              
                     p.chathistory.Add("Doctor(BROADCAST): " + MessageBox.Text);
-                }
             }
             MessageBox.ResetText();
             Invoke(new switchChat(UpdateChat));
