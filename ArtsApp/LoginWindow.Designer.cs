@@ -94,6 +94,9 @@
             this.Text = "Login";
             this.ResumeLayout(false);
             this.PerformLayout();
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 
         }
 
