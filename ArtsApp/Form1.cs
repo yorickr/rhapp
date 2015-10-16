@@ -150,8 +150,10 @@ namespace ArtsApp
             try
             {
                 updateField(textBox4, values[1]);
-                updateField(textBox5, values[2]);
-                updateField(textBox2, values[3]);
+                //updateField(textBox5, values[2]);
+                //updateField(textBox2, values[3]);
+                updateField(textBox5, "" + Math.Round((int.Parse(values[2]) / 10 / 1.0), 2) + " km/u");
+                updateField(textBox2, "" + (int.Parse(values[3]) / 10.0) + " km");
                 updateField(textBox3, values[4]);
                 updateField(textBox6, values[5]);
                 updateField(textBox1, values[6]);
@@ -482,7 +484,8 @@ namespace ArtsApp
                     {
                         updateField(textBox4, values[1]);
                         updateField(textBox5, values[2]);
-                        updateField(textBox2, values[3]);
+                        //updateField(textBox2, values[3]);
+                        updateField(textBox2, "" + (int.Parse(values[3]) / 10.0) + " km");
                         updateField(textBox3, values[4]);
                         updateField(textBox6, values[5]);
                         updateField(textBox1, values[6]);
