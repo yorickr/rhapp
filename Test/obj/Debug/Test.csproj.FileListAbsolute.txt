@@ -25,3 +25,6 @@ C:\Users\guusv_000\Documents\rhapp\Test\obj\Debug\Test.csprojResolveAssemblyRefe
 C:\Users\guusv_000\Documents\rhapp\Test\obj\Debug\Test.Form1.resources
 C:\Users\guusv_000\Documents\rhapp\Test\obj\Debug\Test.Properties.Resources.resources
 C:\Users\guusv_000\Documents\rhapp\Test\obj\Debug\Test.csproj.GenerateResource.Cache
+C:\Users\martijn\Documents\GitHub\rhapp\Test\bin\Debug\Test.exe.config
+C:\Users\martijn\Documents\GitHub\rhapp\Test\obj\Debug\Test.exe
+C:\Users\martijn\Documents\GitHub\rhapp\Test\obj\Debug\Test.pdb

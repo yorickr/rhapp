@@ -15,3 +15,12 @@ C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ClientApp\obj\Debug\C
 C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ClientApp\obj\Debug\ClientApp.csproj.GenerateResource.Cache
 C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ClientApp\obj\Debug\Client-ArtsApp.exe
 C:\Users\Yorick\documents\visual studio 2015\Projects\Test\ClientApp\obj\Debug\Client-ArtsApp.pdb
+C:\Users\martijn\Documents\GitHub\rhapp\ClientApp\bin\Debug\Client-ArtsApp.exe.config
+C:\Users\martijn\Documents\GitHub\rhapp\ClientApp\bin\Debug\Client-ArtsApp.exe
+C:\Users\martijn\Documents\GitHub\rhapp\ClientApp\bin\Debug\Client-ArtsApp.pdb
+C:\Users\martijn\Documents\GitHub\rhapp\ClientApp\obj\Debug\ClientApp.csprojResolveAssemblyReference.cache
+C:\Users\martijn\Documents\GitHub\rhapp\ClientApp\obj\Debug\ClientApp.Form1.resources
+C:\Users\martijn\Documents\GitHub\rhapp\ClientApp\obj\Debug\Client_ArtsApp.Properties.Resources.resources
+C:\Users\martijn\Documents\GitHub\rhapp\ClientApp\obj\Debug\ClientApp.csproj.GenerateResource.Cache
+C:\Users\martijn\Documents\GitHub\rhapp\ClientApp\obj\Debug\Client-ArtsApp.exe
+C:\Users\martijn\Documents\GitHub\rhapp\ClientApp\obj\Debug\Client-ArtsApp.pdb

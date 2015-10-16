@@ -133,10 +133,11 @@ namespace ClientApp
             try
             {
                 updateField(textBox4, values[1]);
-                updateField(textBox5, values[2]);
+              //  double distance = Math.Round((int.Parse(values[2]) / 10 / 3.6), 2);
+                updateField(textBox5, ""+ Math.Round((int.Parse(values[2]) / 10 / 3.6), 2)+ " m/s");
                 updateField(textBox2, values[3]);
                 updateField(textBox3, values[4]);
-               // updateField(textBox6, values[5]);
+                updateField(textBox6, values[5]);
                 updateField(textBox1, values[6]);
             }
             catch(Exception e)
