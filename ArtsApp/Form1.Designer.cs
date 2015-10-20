@@ -61,7 +61,6 @@
             this.Login = new System.Windows.Forms.Button();
             this.broadcast = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -354,21 +353,11 @@
     "|  Werkelijk Vermogen";
             this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(524, 58);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(41, 13);
-            this.label11.TabIndex = 45;
-            this.label11.Text = "label11";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(787, 360);
-            this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.broadcast);
             this.Controls.Add(this.Login);
@@ -444,7 +433,6 @@
         private System.Windows.Forms.Button Login;
         private System.Windows.Forms.Button broadcast;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
     }
 }
 
