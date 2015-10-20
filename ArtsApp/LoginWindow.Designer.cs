@@ -97,7 +97,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-
+            password.PasswordChar = '*';
         }
 
         #endregion

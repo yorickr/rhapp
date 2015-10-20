@@ -619,6 +619,11 @@ namespace ArtsApp
             Invoke(new switchChat(UpdateChat));
         }
 
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void showLoginDialog()
         {
             LoginWindow test = new LoginWindow(this);
